@@ -1,0 +1,50 @@
+# dependencies
+node_modules
+
+# artifacts
+.next
+coverage
+.nyc_output
+dist
+out
+storybook-static
+junit.xml
+.cache
+
+# We keep secret credentials for running testcafe locally here
+.testcafe-credentials.json
+
+# this file gets auto-generated as part of the build script
+# so we dont want to include it in vcs
+pages/routes.json
+
+# we're using yarn, so make sure to not also
+# commit npm lockfile
+package-lock.json
+
+# misc
+.DS_Store
+.idea
+.npmrc
+yarn-debug.log*
+yarn-error.log*
+newrelic_agent.log*
+
+# other directories/files
+**/*.code-workspace
+*.log
+.env
+metrics.txt
+
+# testcafe
+testcafe/screenshots/
+testcafe/videos/
+testcafe/reports/
+testcafe/allure
+
+# web-performance reports
+sitespeed-result/
+
+# local certificate
+*.crt
+*.key

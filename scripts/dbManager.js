@@ -4,17 +4,20 @@ const fs = require('fs/promises');
 // let db = {};
 const database = './public/db.txt';
 
-const getKeyValueObject = (fileName, audioTile) => { return { [fileName]: audioTile }; }
+const getKeyValueObject = (fileName, audioTitle, text) => {
+  const url = `http://localhost:3001/audio/${fileName}.mp3`
+  return { fileName, audioTitle, url, text };
+}
 
 async function readDbFile() {
   try {
     const data = await fs.readFile(database, { encoding: 'utf8' });
-    console.log(data);
-    return JSON.parse(data);
+    console.log('data => ',data);
+    return data ? JSON.parse(data) : [];
   } catch (err) {
     console.log(err);
   }
-  return {};
+  return [];
 }
 
 // async function writeDbFile() {
@@ -25,13 +28,13 @@ async function readDbFile() {
 //   }
 // }
 
-async function addToDatabase(fileName, audioTile) {
-  const entrant = getKeyValueObject(fileName, audioTile);
+async function addToDatabase(fileName, audioTitle, text) {
+  const entrant = getKeyValueObject(fileName, audioTitle, text);
   const data = await readDbFile();
-  console.log('db', typeof data);
-  const entries = JSON.stringify({...data, ...entrant})
+  console.log('addToDatabase data', data);
+  data.unshift(entrant);
   try {
-    await fs.writeFile(database, entries);
+    await fs.writeFile(database, JSON.stringify(data));
   } catch (err) {
     console.log(err);
   }

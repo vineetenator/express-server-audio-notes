@@ -10,7 +10,7 @@ router.post('/', function (req, res, next) {
   const textNotes = req.body.textNotes;
   const audioTile = req.body.noteName || date.toISOString();
   const fileName = date.getTime().toString();
-  DB.addToDatabase(fileName, audioTile)
+  DB.addToDatabase(fileName, audioTile, textNotes.substr(0, 25))
   polly.convertToAudio(textNotes, fileName);
   res.send({"success": "ok"});
 });
